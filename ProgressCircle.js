@@ -95,7 +95,7 @@
 
             return this;
         },
-        
+
         /**
          * @method Manually update all circles
          */
@@ -227,6 +227,11 @@
          * @returns this
          */
         _draw: function() {
+            if (this.progress == 0) {
+                // Draw nothing when progress is 0.
+                return
+            }
+
             var ctx = this.context,
 
                 ANGLE_OFFSET = -Math.PI / 2,
