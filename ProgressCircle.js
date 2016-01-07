@@ -53,6 +53,7 @@
         /**
          * @method Adds an progress monitor entry.
          * @param params.fillColor Color to fill in the circle.
+         * @param params.fillColorComplete Color to fill in the circle when complete.
          * @param params.outlineColor Color to outline the circle.
          * @param params.progressListener Callback function to fetch the progress.
          * @param params.infoListener Callback function to fetch the info.
@@ -72,6 +73,7 @@
 
                 id: this.circles.length,
                 fillColor: params.fillColor,
+                fillColorComplete: params.fillColorComplete,
                 outlineColor: params.outlineColor,
                 progressListener: params.progressListener,
                 infoListener: params.infoListener,
@@ -149,6 +151,7 @@
      * @param params.centerX X coordinate of the center of circles.
      * @param params.centerY Y coordinate of the center of circles.
      * @param params.fillColor Color to fill in the circle.
+     * @param params.fillColor Color to fill in the circle when complete.
      * @param params.outlineColor Color to outline the circle.
      * @param params.progressListener Callback function to fetch the progress.
      * @param params.infoListener Callback function to fetch the info.
@@ -163,6 +166,7 @@
         this.arcWidth = params.arcWidth;
         this.innerRadius = params.innerRadius || 0;
         this.fillColor = params.fillColor || '#fff';
+        this.fillColorComplete = params.fillColorComplete || this.fillColor;
         this.outlineColor = params.outlineColor || this.fillColor;
         this.progressListener = params.progressListener;
         this.infoLineLength = params.infoLineLength || 250;
@@ -245,8 +249,13 @@
                 innerRadius = this.innerRadius,
                 outerRadius = this.outerRadius;
 
-            ctx.fillStyle = this.fillColor;
-            ctx.strokeStyle = this.outlineColor;
+            if (this.progress == 1) {
+                ctx.fillStyle = this.fillColorComplete;
+                ctx.strokeStyle = this.fillColorComplete;
+            } else {
+                ctx.fillStyle = this.fillColor;
+                ctx.strokeStyle = this.outlineColor;
+            }
 
             ctx.beginPath();
             ctx.arc(x, y, innerRadius, startAngle, endAngle, false);
